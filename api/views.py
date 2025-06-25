@@ -37,7 +37,10 @@ def product_detail(request: Request, pk: int):
 @api_view(["GET"])
 def order_list(request: Request):
     # queryset
-    orders = Order.objects.all()
+    orders = Order.objects.prefetch_related(
+        # "items",
+        "items__product",
+    )  # prefetch_related, prefetches the related items, speeding up the query
     # serializer
     serializer = OrderSerializer(
         orders,
