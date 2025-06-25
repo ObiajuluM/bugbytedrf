@@ -75,6 +75,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
+        related_name="items",
     )
     # link order item to product
     product = models.ForeignKey(
@@ -87,7 +88,7 @@ class OrderItem(models.Model):
     # product.price * quantity
     @property
     def item_subtotal(self):
-        self.product.price * self.quantity
+        return self.product.price * self.quantity
 
     def __str__(self):
         return f"{self.quantity} X {self.product.name} in order {self.order.order_id}"
