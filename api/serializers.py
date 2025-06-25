@@ -46,6 +46,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "product_name",
             "product_price",
             "quantity",
+            "item_subtotal",  # we used a property in the serializer
             # "order",
         )
 
