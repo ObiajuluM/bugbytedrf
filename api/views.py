@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from api.serializers import OrderSerializer, ProductInfoSerializer, ProductSerializer
-from api.models import Order, Product
+from api.models import Order, Product, User
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -16,7 +16,6 @@ class ProductListApiView(generics.ListAPIView):
 class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
     # use the product id as the look up reference instead of pk
     lookup_url_kwarg = "product_id"
 
@@ -28,6 +27,21 @@ class OrderListApiView(generics.ListCreateAPIView):
     )  # prefetch_related, prefetches the related items, speeding up the query
     # serializer
     serializer_class = OrderSerializer
+
+
+class UserOrderListApiView(generics.ListCreateAPIView):
+    queryset = Order.objects.prefetch_related(
+        # "items",
+        "items__product",
+    )  # prefetch_related, prefetches the related items, speeding up the query
+    # serializer
+    serializer_class = OrderSerializer
+
+    # function to return the queryset based on the user
+    def get_queryset(self):
+        user = self.request.user
+        qs =  super().get_queryset()
+        return qs.filter(user=user)
 
 
 # function based views
