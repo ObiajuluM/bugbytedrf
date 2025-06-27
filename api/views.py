@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.db.models import Max
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProductListApiView(generics.ListAPIView):
@@ -36,11 +37,14 @@ class UserOrderListApiView(generics.ListCreateAPIView):
     )  # prefetch_related, prefetches the related items, speeding up the query
     # serializer
     serializer_class = OrderSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
     # function to return the queryset based on the user
     def get_queryset(self):
         user = self.request.user
-        qs =  super().get_queryset()
+        qs = super().get_queryset()
         return qs.filter(user=user)
 
 

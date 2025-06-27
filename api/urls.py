@@ -19,5 +19,6 @@ urlpatterns = [
     path(
         "user-orders/",
         views.UserOrderListApiView.as_view(),
+        name="user-orders",
     ),
 ]
