@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from django.db.models import Max
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 
 class ProductListApiView(generics.ListAPIView):
@@ -46,6 +47,21 @@ class UserOrderListApiView(generics.ListCreateAPIView):
         user = self.request.user
         qs = super().get_queryset()
         return qs.filter(user=user)
+
+
+# class based views with api view
+class ProductInfoAPIView(APIView):
+
+    def get(self, request: Request):
+        products = Product.objects.all()
+        serializer = ProductInfoSerializer(
+            {
+                "products": products,
+                "count": len(products),
+                "max_price": products.aggregate(max_price=Max("price"))["max_price"],
+            }
+        )
+        return Response(serializer.data)
 
 
 # function based views
@@ -94,14 +110,14 @@ class UserOrderListApiView(generics.ListCreateAPIView):
 #     )
 
 
-@api_view(["GET"])
-def product_info(request):
-    products = Product.objects.all()
-    serializer = ProductInfoSerializer(
-        {
-            "products": products,
-            "count": len(products),
-            "max_price": products.aggregate(max_price=Max("price"))["max_price"],
-        }
-    )
-    return Response(serializer.data)
+# @api_view(["GET"])
+# def product_info(request):
+#     products = Product.objects.all()
+#     serializer = ProductInfoSerializer(
+#         {
+#             "products": products,
+#             "count": len(products),
+#             "max_price": products.aggregate(max_price=Max("price"))["max_price"],
+#         }
+#     )
+#     return Response(serializer.data)
