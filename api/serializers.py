@@ -8,9 +8,9 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         # tuple with all the fields it's going to convert to serialize (json)
         fields = (
-            "id",
+            # "id",
             "name",
-            # "description",
+            "description",
             "price",
             "stock",
         )

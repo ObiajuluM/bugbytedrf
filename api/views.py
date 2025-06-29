@@ -10,8 +10,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 
-class ProductListApiView(generics.ListAPIView):
-    queryset = Product.objects.exclude(stock__gt=0)
+# TODO: https://cdrf.co
+
+
+class ProductListCreateApiView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
