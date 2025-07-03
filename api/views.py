@@ -1,12 +1,10 @@
-from django.shortcuts import get_object_or_404
 from api.serializers import OrderSerializer, ProductInfoSerializer, ProductSerializer
-from api.models import Order, Product, User
+from api.models import Order, Product
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from django.db.models import Max
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.views import APIView
 
 
@@ -16,6 +14,13 @@ from rest_framework.views import APIView
 class ProductListCreateApiView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    def get_permissions(self):
+        self.permission_classes = [AllowAny]
+        # if the request method is POST, then only allow admin users to create products
+        if self.request.method == "POST":
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
 
 
 class ProductDetailAPIView(generics.RetrieveAPIView):
