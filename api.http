@@ -1,0 +1,16 @@
+# send a get request to the products endpoint, using http protocol 1.1
+GET http://127.0.0.1:8000/products/ HTTP/1.1
+
+# seperates the requests
+###
+
+POST  http://127.0.0.1:8000/products/ HTTP/1.1
+Content-Type: application/json
+# Authorization: Bearer <your_token_here>
+
+{
+    "name": "A New Product",
+    "price": 19.99,
+    "stock": 14,
+    "description": "A new product for testing purposes."
+}
