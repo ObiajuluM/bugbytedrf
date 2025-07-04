@@ -43,4 +43,4 @@ class UserOrderTestCase(TestCase):
         # reverse the endpoint `user-orders`, it returns the url and then makes a get request
         response = self.client.get(reverse("user-orders"))
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
