@@ -30,3 +30,12 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/user-orders/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUxNjE5OTIxLCJpYXQiOjE3NTE2MTk2MjEsImp0aSI6IjMyOGQzYTIzYTY5ZTRiN2ViY2IxMjQwMGM2NmEyMmMzIiwidXNlcl9pZCI6MX0.GTbz4Jq_vFuf4OKIYb41ds_KcnDFNaVfjb3avYfU0io
+
+### REFRESH TOKEN
+
+POST  http://127.0.0.1:8000/api/token/refresh/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MTgyMDM4NCwiaWF0IjoxNzUxNzMzOTg0LCJqdGkiOiJjYTU1NTEwNjc5ZDM0ODczYTk2OGI5ZDg1ZTcyNWIyMSIsInVzZXJfaWQiOjF9.ynOj9tvmWZmH5ApOLZ-gmR3_LytNp-rjvWD7-6Ho1I8"
+}
